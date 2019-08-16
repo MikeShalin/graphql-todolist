@@ -25,7 +25,7 @@ const Query = new GraphQLObjectType({
     todo: {
       type: TodoType,
       args: { id: { type: GraphQLID } },
-      resolve(parent, args ) {
+      resolve(parent, args) {
         return Todos.findById(args.id);
       },
     },
@@ -38,6 +38,27 @@ const Query = new GraphQLObjectType({
   },
 })
 
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    toggleDone: {
+      type: TodoType,
+      args: {
+        id: { type: GraphQLID },
+        done: { type: GraphQLInt },
+      },
+      resolve(parent, args) {
+        return Todos.findByIdAndUpdate(
+          args.id,
+          { $set: { done: args.done } },
+          { new: true },
+        )
+      },
+    },
+  },
+})
+
 module.exports = new GraphQLSchema({
   query: Query,
+  mutation: Mutation,
 })
