@@ -5,8 +5,12 @@ import map from 'lodash/map'
 //@ts-ignore
 import { compose } from 'recompose' //todo сделать на хуках
 import { graphql } from 'react-apollo'
+import { List, Container } from 'semantic-ui-react'
 
+import { Loader } from '../Loader'
+import { Checkbox } from '../Checkbox'
 import { todosQuery } from './queries'
+import { checkboxNames } from './config'
 
 type TTodo = { id: string, name: string, done: number }
 type TProps = {
@@ -18,19 +22,23 @@ type TProps = {
 }
 
 const TodoList = ({ data: { todos, loading, error } }: TProps) => {
-  if (loading) return <span>...loading</span>
+  if (loading) return <Loader />
   if (error) return <span>error: {String(error)}</span>
   return (
-    <ul>
-      {
-        map(todos, ({ id, name, done }: TTodo) => (
-          <li key={id}>
-            <h3>{name}</h3>
-            <h3>done: {String(!!done)}</h3>
-          </li>
-        ))
-      }
-    </ul>
+    <Container>
+      <List divided relaxed>
+        {
+          map(todos, ({ id, name, done }: TTodo) => (
+            <List.Item key={id}>
+              <Checkbox name={checkboxNames[done]}/>
+              <List.Content>
+                <List.Header as='a'>{name}</List.Header>
+              </List.Content>
+            </List.Item>
+          ))
+        }
+      </List>
+    </Container>
   )
 }
 
