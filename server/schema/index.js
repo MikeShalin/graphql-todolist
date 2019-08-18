@@ -1,5 +1,5 @@
 const graphql = require('graphql');
-const Todos = require('../models/todo');
+const Todo = require('../models/todo');
 
 const {
   GraphQLObjectType,
@@ -8,6 +8,7 @@ const {
   GraphQLID,
   GraphQLInt,
   GraphQLList,
+  GraphQLNonNull,
 } = graphql
 
 const TodoType = new GraphQLObjectType({
@@ -26,13 +27,13 @@ const Query = new GraphQLObjectType({
       type: TodoType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        return Todos.findById(args.id);
+        return Todo.findById(args.id);
       },
     },
     todos: {
       type: new GraphQLList(TodoType),
       resolve() {
-        return Todos.find({});
+        return Todo.find({});
       },
     },
   },
@@ -48,11 +49,21 @@ const Mutation = new GraphQLObjectType({
         done: { type: GraphQLInt },
       },
       resolve(parent, args) {
-        return Todos.findByIdAndUpdate(
+        return Todo.findByIdAndUpdate(
           args.id,
           { $set: { done: args.done } },
           { new: true },
         )
+      },
+    },
+    addTodo: {
+      type: TodoType,
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, { name }) {
+        const todo = new Todo({ name, done: 0 })
+        return todo.save()
       },
     },
   },
