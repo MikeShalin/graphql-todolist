@@ -56,6 +56,7 @@ const Mutation = new GraphQLObjectType({
         )
       },
     },
+
     addTodo: {
       type: TodoType,
       args: {
@@ -66,6 +67,16 @@ const Mutation = new GraphQLObjectType({
         return todo.save()
       },
     },
+
+    deleteTodo: {
+      type: TodoType,
+      args: {
+        id: { type: GraphQLID },
+      },
+      resolve(parent, args) {
+        return Todo.findByIdAndRemove(args.id)
+      }
+    }
   },
 })
 

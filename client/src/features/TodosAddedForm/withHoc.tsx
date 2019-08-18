@@ -8,7 +8,7 @@ import { todosQuery } from '../TodoList/queries'
 export const withGraphqlAddTodo = graphql(addTodo, {
   props: ({ mutate }) => ({
     //@ts-ignore
-    addTodo: ({ name }: { name: string }) => mutate({
+    addTodo: (name: string) => mutate({
       variables: { name },
       refetchQueries: [{ query: todosQuery }],
     }),
@@ -25,15 +25,15 @@ export const withHoc = compose(
       }),
       clearInput: () => () => ({
         inputValue: '',
-      })
+      }),
     },
   ),
   withGraphqlAddTodo,
   //@ts-ignore
   withHandlers({
-    onSubmit: ({ addTodo, clearInput, inputValue: name }) => () => {
-      addTodo({ name })
+    onSubmit: ({ addTodo, clearInput, inputValue }) => () => {
+      addTodo(inputValue)
       clearInput()
-    }
-  })
+    },
+  }),
 )

@@ -9,3 +9,13 @@ export const toggleDoneMutation = gql`
     }
   }
 `
+
+export const deleteTodoMutation = gql`
+  mutation($id: ID){
+    deleteTodo(id: $id) {
+      id
+      name
+      done
+    }
+  }
+`

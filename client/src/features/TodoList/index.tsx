@@ -17,9 +17,18 @@ type TProps = {
     error: Error,
   },
   toggleDone: ({ id, done }: { id: string, done: number }) => void
+  deleteTodo: (id: string) => void
 }
 
-const TodoList = ({ data: { todos, loading, error }, toggleDone }: TProps) => {
+const TodoList = ({
+                    data: {
+                      todos,
+                      loading,
+                      error,
+                    },
+                    toggleDone,
+                    deleteTodo,
+                  }: TProps) => {
   if (loading) return <Loader />
   if (error) return <span>error: {String(error)}</span>
   return (
@@ -40,7 +49,7 @@ const TodoList = ({ data: { todos, loading, error }, toggleDone }: TProps) => {
                   display: 'flex',
                   alignItems: 'center',
                   width: '100%',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
                 }}
                 onClick={() => toggleDone({ id, done: Number(!done) })}
               >
@@ -48,7 +57,7 @@ const TodoList = ({ data: { todos, loading, error }, toggleDone }: TProps) => {
                 <List.Content>{name}</List.Content>
               </span>
               <List.Content floated='right'>
-                <Button color='red'>×</Button>
+                <Button color='red' onClick={() => deleteTodo(id)}>×</Button>
               </List.Content>
             </List.Item>
           ))
