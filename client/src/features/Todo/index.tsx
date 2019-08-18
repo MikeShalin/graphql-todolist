@@ -2,13 +2,11 @@ import React from 'react'
 
 import { ApolloConsumer } from 'react-apollo' //todo в withHoc
 
-import {
-  Button,
-  Label,
-  List,
-} from 'semantic-ui-react'
+import { Button, List } from 'semantic-ui-react'
 
 import { Checkbox } from '../Checkbox'
+import { Tooltip } from '../Tooltip'
+
 import { withHoc } from './withHoc'
 import { styles } from './styles'
 import { checkboxNames } from './config'
@@ -49,9 +47,7 @@ const Todo = ({
         }
         return (
           <List.Item style={styles.list}>
-          <span
-            style={styles.content}
-          >
+          <span style={styles.content}>
             <Checkbox
               name={checkboxNames[done]}
               // @ts-ignore
@@ -66,13 +62,9 @@ const Todo = ({
               {name}
               {
                 isShow && (
-                  <Label
-                    basic
-                    color='red'
-                    pointing style={styles.label}
-                  >
-                    Update
-                  </Label>
+                  <Tooltip>
+                    Click to update
+                  </Tooltip>
                 )
               }
             </List.Content>
@@ -84,7 +76,6 @@ const Todo = ({
               <Button color='red' onClick={handleDelete(id)}>×</Button>
             </List.Content>
           </List.Item>
-
         )
       }
     }

@@ -1,4 +1,4 @@
-import { graphql } from 'react-apollo'
+import { graphql, withApollo } from 'react-apollo'
 import {
   compose,
   withState,
@@ -24,27 +24,23 @@ export const withGraphqlAddTodo = graphql(addTodoMutation, {
 
 // @ts-ignore
 const withGraphqlUpdate = graphql(updateTodoMutation, {
+  //@ts-ignore
   props: ({ mutate }) => ({
     // @ts-ignore
-    updateTodo: ({ id, name }) => mutate({
-      variables: { id, name },
+    updateTodo: ({ id, name, done }) => mutate({
+      variables: { id, name, done },
       refetchQueries: [{ query: todosQuery }],
     }),
   }),
 })
 
-// @ts-ignore
-const withClientCache = graphql(getCacheQuery, {
-  // @ts-ignore
-  options: ({ data }) => data,
-})
 
 export const withHoc = compose(
   withState('inputValue', 'setInputValue', ''),
   withGraphqlAddTodo,
   withGraphqlUpdate,
-  withClientCache,
-  // ApolloConsumer,
+  graphql(getCacheQuery),
+  withApollo,
   //@ts-ignore
   withHandlers({
     // @ts-ignore
@@ -61,13 +57,19 @@ export const withHoc = compose(
                    updateTodoId: id,
                    updateTodoDone: done,
                  },
-                 // client,
+                 client,
                }) => () => {
       if (id) {
         updateTodo({ id, name, done })
         setInputValue('')
-        return false //todo не убирается кеш после сабмита, нет чекбокса у тудушки которую апдейтнули
-        // client.writeData()
+        client.cache.writeData({
+          data: {
+            updateTodoId: null,
+            updateTodoName: null,
+            updateTodoDone: null,
+          },
+        })
+        return false
       }
       addTodo(name)
       setInputValue('')
@@ -84,8 +86,10 @@ export const withHoc = compose(
         setInputValue,
       } = this.props
       // @ts-ignore
-      if (updateTodoName && !prevProps.data.updateTodoName) {
-        setInputValue(updateTodoName)
+      if (updateTodoName && !prevProps.data.updateTodoName
+        // @ts-ignore
+        || updateTodoName !== prevProps.data.updateTodoName) {
+        setInputValue(updateTodoName || '')
       }
     },
   }),

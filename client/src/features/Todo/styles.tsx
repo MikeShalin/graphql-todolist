@@ -11,17 +11,10 @@ const content = {
   cursor: 'pointer',
 }
 
-const label = {
-  position: 'absolute',
-  top: '50%',
-  left: 'calc(50% - 30px)'
-}
-
 const name = { position: 'relative' }
 
 export const styles = {
   list,
   content,
-  label,
   name,
 }
