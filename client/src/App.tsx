@@ -2,10 +2,13 @@ import React from 'react'
 
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from 'react-apollo'
+
+import { ApolloClient } from 'apollo-client'
 
 import { TodoListComposed as TodoList } from './features/TodoList'
-import { ApolloClient } from 'apollo-client'
+import { TodosAddedForm } from './features/TodosAddedForm'
+import { AppWrapper } from './features/AppWrapper'
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:3005/graphql',
@@ -18,12 +21,13 @@ const client = new ApolloClient({
   cache,
 })
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   return (
     <ApolloProvider client={client}>
-      <TodoList />
+      <AppWrapper>
+        <TodosAddedForm />
+        <TodoList />
+      </AppWrapper>
     </ApolloProvider>
   )
 }
-
-export default App
