@@ -1,4 +1,3 @@
-// @ts-ignore
 import React from 'react'
 
 import { Button, Form, Segment } from 'semantic-ui-react'
@@ -11,26 +10,26 @@ type TProps = {
   onSubmit: () => void,
 }
 
-//todo добавить загрузку
 // @ts-ignore
 export const TodosAddedForm = withHoc(({
                                          onChange,
                                          inputValue,
                                          onSubmit,
                                        }: TProps) => (
-  <Form size='large' onSubmit={onSubmit}>
-    <Segment>
-      <Form.Input
-        icon='idea'
-        iconPosition='left'
-        placeholder='Write there, please'
-        onChange={onChange}
-        value={inputValue}
-        fluid
-      />
-      <Button color='teal' fluid size='large'>
-        Add todo
-      </Button>
-    </Segment>
-  </Form>
-))
+    <Form size='large' onSubmit={onSubmit}>
+      <Segment>
+        <Form.Input
+          icon='idea'
+          iconPosition='left'
+          placeholder='Write there, please'
+          onChange={onChange}
+          value={inputValue}
+          fluid
+        />
+        <Button color='teal' fluid size='large'>
+          Add todo
+        </Button>
+      </Segment>
+    </Form>
+  ),
+)

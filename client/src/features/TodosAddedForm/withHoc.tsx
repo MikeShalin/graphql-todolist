@@ -86,9 +86,7 @@ export const withHoc = compose(
         setInputValue,
       } = this.props
       // @ts-ignore
-      if (updateTodoName && !prevProps.data.updateTodoName
-        // @ts-ignore
-        || updateTodoName !== prevProps.data.updateTodoName) {
+      if (updateTodoName !== prevProps.data.updateTodoName) {
         setInputValue(updateTodoName || '')
       }
     },

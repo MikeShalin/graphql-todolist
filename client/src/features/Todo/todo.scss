@@ -1,0 +1,29 @@
+.list-wrapper {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.tooltip-wrapper {
+  display: none !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: calc(50% - 60px) !important;
+  width: 120px !important;
+}
+
+.name-wrapper {
+  position: relative;
+  &:hover {
+    .tooltip-wrapper {
+      display: block !important;
+    }
+  }
+}

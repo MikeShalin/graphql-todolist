@@ -22,8 +22,6 @@ type TProps = {
   handlerAdd: ({ id, done }: { id: string, done: number }) => void
 }
 
-//todo добавить css для ховера
-
 const TodoList = ({
                     data: {
                       todos,

@@ -1,6 +1,5 @@
-import { compose, withHandlers, withState } from 'recompose' //todo сделать на
-                                                             // хуках
-import { graphql } from 'react-apollo'
+import { compose, withHandlers } from 'recompose' //todo сделать на хуках
+import { graphql, withApollo } from 'react-apollo'
 
 import { todosQuery } from '../TodoList/queries'
 import { toggleDoneMutation, deleteTodoMutation } from './mutations'
@@ -29,7 +28,7 @@ const withGraphqlDelete = graphql(deleteTodoMutation, {
 
 //@ts-ignore
 export const withHoc = compose(
-  withState('isShow', 'toggleShow', false),
+  withApollo,
   graphql(todosQuery),
   withGraphqlChecked,
   withGraphqlDelete,
@@ -41,10 +40,18 @@ export const withHoc = compose(
 
     handleDelete: ({ deleteTodo }) => (id: string) => () => deleteTodo(id),
 
-    handleToggleShow: ({ toggleShow }) => (isShow: boolean) => () => toggleShow(isShow),
-
     //@ts-ignore
-    handleAddCacheData: () => (client) => (data) => () => {
+    handleAddCacheData: ({
+                           client,
+                           id,
+                           name,
+                           done,
+                         }) => () => {
+      const data = {
+        updateTodoId: id,
+        updateTodoName: name,
+        updateTodoDone: done,
+      }
       client.writeData({ data })
     },
   }),
