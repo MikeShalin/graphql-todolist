@@ -76,7 +76,24 @@ const Mutation = new GraphQLObjectType({
       resolve(parent, args) {
         return Todo.findByIdAndRemove(args.id)
       }
-    }
+    },
+
+    todoUpdateName: {
+      type: TodoType,
+      args: {
+        id: { type: GraphQLID },
+        name: { type: GraphQLString},
+        done: { type: GraphQLInt},
+      },
+      resolve(parent, args) {
+        return Todo.findByIdAndUpdate(
+          args.id,
+          { $set: { name: args.name, done: args.done } },
+          { new: true },
+        )
+      },
+    },
+
   },
 })
 

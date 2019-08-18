@@ -2,12 +2,12 @@ import React from 'react'
 
 //@ts-ignore
 import map from 'lodash/map'
-import { List, Button, Segment } from 'semantic-ui-react'
+import { List, Segment } from 'semantic-ui-react'
 
 import { Loader } from '../Loader'
-import { Checkbox } from '../Checkbox'
+import { TodoComposed as Todo } from '../Todo'
+
 import { withHoc } from './withHoc'
-import { checkboxNames } from './config'
 
 type TTodo = { id: string, name: string, done: number }
 type TProps = {
@@ -18,7 +18,11 @@ type TProps = {
   },
   toggleDone: ({ id, done }: { id: string, done: number }) => void
   deleteTodo: (id: string) => void
+  handleDelete: (id: string) => void
+  handlerAdd: ({ id, done }: { id: string, done: number }) => void
 }
+
+//todo добавить css для ховера
 
 const TodoList = ({
                     data: {
@@ -26,8 +30,6 @@ const TodoList = ({
                       loading,
                       error,
                     },
-                    toggleDone,
-                    deleteTodo,
                   }: TProps) => {
   if (loading) return <Loader />
   if (error) return <span>error: {String(error)}</span>
@@ -35,31 +37,14 @@ const TodoList = ({
     <Segment>
       <List divided relaxed verticalAlign='middle'>
         {
-          map(todos, ({ id, name, done }: TTodo) => (
-            <List.Item
+          map(todos, ({ id, name, done }: TTodo) =>(
+            //@ts-ignore
+            <Todo
               key={id}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            >
-              <span
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  width: '100%',
-                  cursor: 'pointer',
-                }}
-                onClick={() => toggleDone({ id, done: Number(!done) })}
-              >
-                <Checkbox name={checkboxNames[done]} />
-                <List.Content>{name}</List.Content>
-              </span>
-              <List.Content floated='right'>
-                <Button color='red' onClick={() => deleteTodo(id)}>×</Button>
-              </List.Content>
-            </List.Item>
+              done={done}
+              name={name}
+              id={id}
+            />
           ))
         }
       </List>

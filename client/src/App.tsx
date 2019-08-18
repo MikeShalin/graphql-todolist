@@ -21,13 +21,19 @@ const client = new ApolloClient({
   cache,
 })
 
-export const App: React.FC = () => {
-  return (
-    <ApolloProvider client={client}>
-      <AppWrapper>
-        <TodosAddedForm />
-        <TodoList />
-      </AppWrapper>
-    </ApolloProvider>
-  )
-}
+cache.writeData({
+  data: {
+    updateTodoId: null,
+    updateTodoName: null,
+    updateTodoDone: null,
+  },
+})
+
+export const App: React.FC = () => (
+  <ApolloProvider client={client}>
+    <AppWrapper>
+      <TodosAddedForm />
+      <TodoList />
+    </AppWrapper>
+  </ApolloProvider>
+)
