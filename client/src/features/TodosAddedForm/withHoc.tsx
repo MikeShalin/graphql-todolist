@@ -11,7 +11,6 @@ import { todosQuery } from '../TodoList/queries'
 import { addTodoMutation, updateTodoMutation } from './mutations'
 import { getCacheQuery } from './queries'
 
-//@ts-ignore
 export const withGraphqlAddTodo = graphql(addTodoMutation, {
   props: ({ mutate }) => ({
     //@ts-ignore

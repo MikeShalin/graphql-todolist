@@ -15,10 +15,9 @@ type TProps = {
   done: number,
   name: string,
   id: string,
-  toggleDone: ({ id, done }: { id: string, done: number }) => void
-  deleteTodo: (id: string) => void
-  handleDelete: (id: string) => void
-  handlerAdd: ({ id, done }: { id: string, done: number }) => void
+  handleDelete: (id: string) => () => void,
+  handlerAdd: ({ id, done }: { id: string, done: number }) => () => () => void,
+  handleAddCacheData: () => void
 }
 
 const Todo = ({
@@ -27,14 +26,12 @@ const Todo = ({
                 done,
                 name,
                 id,
-                //@ts-ignore
                 handleAddCacheData,
               }: TProps) => (
-  <List.Item className="list-wrapper">
-    <span className="content-wrapper">
+  <List.Item className='list-wrapper'>
+    <span className='content-wrapper'>
       <Checkbox
         name={checkboxNames[done]}
-        // @ts-ignore
         onClick={handlerAdd({ id, done: Number(!done) })}
       />
       <List.Content
@@ -48,9 +45,6 @@ const Todo = ({
       </List.Content>
      </span>
     <List.Content floated='right'>
-      {
-        /**
-         //@ts-ignore **/}
       <Button color='red' onClick={handleDelete(id)}>×</Button>
     </List.Content>
   </List.Item>
