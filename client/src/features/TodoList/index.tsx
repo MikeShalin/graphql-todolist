@@ -1,7 +1,7 @@
 import React from 'react'
 
 import map from 'lodash/map'
-import {Button, List, Segment} from 'semantic-ui-react'
+import { List, Segment } from 'semantic-ui-react'
 
 import { Loader } from '../Loader'
 import { TodoComposed as Todo } from '../Todo'
