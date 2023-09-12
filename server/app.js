@@ -10,8 +10,6 @@ const {
   CONNECTION_PARAMS,
 } = require('./config');
 
-const PORT = 3005;
-
 mongoose.connect(`mongodb+srv://${USER}:${PASS}@${URI_DB}/${NAME_DB}`, CONNECTION_PARAMS)
 
 const dbConnection = mongoose.connection;
@@ -21,6 +19,6 @@ dbConnection.once('open', () => console.warn('Connection to db'))
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
-server.listen({ port: PORT }).then(({ url }) => {
+server.listen({ port: process.env.PORT }).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
 });
