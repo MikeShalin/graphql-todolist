@@ -15,11 +15,11 @@ import { TodosAddedFormComposed as TodosAddedForm } from './features/TodosAddedF
 import { AppWrapper } from './features/AppWrapper'
 
 const httpLink = new HttpLink({
-  uri: `https://${process.env.GRAPHQL_SERVER}/graphql`,
+  uri: `https://${process.env.REACT_APP_GRAPHQL_SERVER}/graphql`,
 })
 
 const wsLink = new WebSocketLink({
-  uri: `ws://${process.env.GRAPHQL_SERVER}/graphql`,
+  uri: `ws://${process.env.REACT_APP_GRAPHQL_SERVER}/graphql`,
   options: {
     reconnect: true,
   },
