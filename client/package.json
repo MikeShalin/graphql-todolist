@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "@types/jest": "24.0.17",
-    "@types/node": "12.7.1",
-    "@types/react": "16.9.1",
-    "@types/react-dom": "16.8.5",
+    "@types/node": "^20.6.0",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
     "@types/recompose": "^0.30.10",
     "apollo-boost": "^0.4.3",
     "apollo-cache-inmemory": "1.6.3",
@@ -18,9 +18,9 @@
     "graphql": "^14.4.2",
     "graphql-tag": "2.10.1",
     "node-sass": "^9.0.0",
-    "react": "^16.14.0",
+    "react": "^18.2.0",
     "react-apollo": "^3.1.5",
-    "react-dom": "^16.14.0",
+    "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "recompose": "^0.30.0",
     "semantic-ui-react": "^0.87.3",
@@ -29,11 +29,12 @@
   },
   "devDependencies": {
     "@apollo/react-testing": "^4.0.0",
-    "react-test-renderer": "^16.9.0"
+    "react-test-renderer": "^16.9.0",
+    "webpack-cli": "^5.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "dev": "webpack-dev-server",
+    "build": "webpack",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
