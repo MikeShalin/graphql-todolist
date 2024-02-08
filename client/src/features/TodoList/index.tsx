@@ -51,5 +51,5 @@ const TodoList = ({
     </Segment>
   )
 }
-
+// @ts-ignore
 export const TodoListComposed = withHoc(TodoList)

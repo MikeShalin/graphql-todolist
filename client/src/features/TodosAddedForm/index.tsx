@@ -31,5 +31,5 @@ const TodosAddedForm = ({
     </Segment>
   </Form>
 )
-
+// @ts-ignore
 export const TodosAddedFormComposed = withHoc(TodosAddedForm)

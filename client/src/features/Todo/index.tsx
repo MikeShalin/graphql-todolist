@@ -44,5 +44,5 @@ const Todo = ({
     </List.Content>
   </List.Item>
 )
-
+// @ts-ignore
 export const TodoComposed = withHoc(Todo)
